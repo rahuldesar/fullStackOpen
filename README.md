@@ -4,3 +4,9 @@
 
 In some situations you may also have to run the command below from the root of the project:
 `rm -rf node_modules/ && npm i`
+
+
+
+`"react": "^17.0.2"`
+`"react-dom": "^17.0.2"`
+are used, Since Apolli client used later in part8 is incompatible with current version of react.
