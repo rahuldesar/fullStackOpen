@@ -6,3 +6,6 @@
 Clone this repo then run : 
 ### `npm install` 
 installs the required packages in folder "node-modules"
+then 
+
+### `npm start`
