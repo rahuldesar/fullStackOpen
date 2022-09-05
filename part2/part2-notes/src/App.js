@@ -4,6 +4,8 @@ import Persons from './components/Persons';
 import PersonForm from './components/PersonForm';
 
 const App = () => {
+
+
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
@@ -16,7 +18,7 @@ const App = () => {
   let changeNewName = (event) =>{
     setNewName(event.target.value);
   }
-  
+
   let changePhoneNumber = (event) =>{
     setPhoneNumber(event.target.value);
   }
