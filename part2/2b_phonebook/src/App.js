@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import HandleFilter from './components/HandleFilter';
 import Persons from './components/Persons';
 import PersonForm from './components/PersonForm';
-import axios from 'axios';
-
+import phonebook from './services/phonebook';
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -11,16 +10,12 @@ const App = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   
   let effect = () =>{
-    console.log('effect');
-    axios.get('http://localhost:3001/persons')
+    phonebook.getAll()
     .then(response =>{
       setPersons(response.data);
     })
   }
-
   useEffect(effect, []);  
-
-
 
   let changeNewName = (event) =>{
     setNewName(event.target.value);
@@ -31,9 +26,8 @@ const App = () => {
   }
 
   let handleFilter = (event) =>{
-    console.log(event.target.value);
-    let newPersons = persons.filter(person => person.name.includes(event.target.value));
-    console.log('newPersons : ', newPersons);
+    let newPersons = persons.filter(person => 
+      person.name.toLowerCase().includes((event.target.value).toLowerCase()));
     setPersons(newPersons);
   }
   
@@ -43,18 +37,52 @@ const App = () => {
       'name' : newName,
       'number' : phoneNumber,
     }
-   
-    let duplicateName = persons.filter((person) => (person.name === newNameObj.name));
-    console.log(duplicateName , newNameObj.name);
-    // let total = props.parts.reduce((sum, part) => sum + part.exercises, 0);
-    if(duplicateName.length > 0 ){
-      alert(`${newName} is already on Phonebook. Duplicate detected`);
-      duplicateName = [];
-    }else {
-      setPersons(persons.concat(newNameObj));
 
+    let duplicateName = persons.filter((person) => (person.name === newNameObj.name));
+    if(duplicateName.length > 0 ){
+      if(window.confirm(`${newName} is already on Phonebook. Replace Old Number with New one?`)){
+        newNameObj.id = duplicateName[0].id;
+        phonebook.update(newNameObj.id, newNameObj)
+        .then(response =>{
+          alert(`Contact of ${newNameObj.name} updated`)
+        });
+        let tempPersons = JSON.parse(JSON.stringify(persons));
+        tempPersons.forEach( person => {
+          console.log(person , newNameObj);
+          if(person.name === newNameObj.name){
+          person.number = newNameObj.number;
+        }
+        });
+        setPersons(tempPersons);
+      } 
+    }else {
+      phonebook.create(newNameObj)
+      .then(response =>
+        {
+          console.log(`${response.data.name} added`)
+          newNameObj.id = response.data.id;
+          setPersons (persons.concat(newNameObj));
+        });
+      }
     }
+
+  let deleteData = (id) => {
+    const person = persons.find(n => n.id === id)
+    const deleteNote = { ...person}
+    let tempName = deleteNote.name;
+    if (window.confirm(`DELETE ${tempName}`)) {
+      phonebook.remove(deleteNote.id)
+      .then(response =>
+        alert(`${tempName} removed`)
+      )
+      let tempPersons = persons.filter(person => person.id !== id);
+      setPersons(tempPersons);
+    } else {
+      console.log("UNABLE TO DELETE");
     }
+  }
+
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -63,7 +91,7 @@ const App = () => {
       <PersonForm newName = {newName} changeNewName = {changeNewName}
         changePhoneNumber = {changePhoneNumber} addName = {addName} />
       <h2>Numbers</h2>
-      <Persons persons= {persons} />
+      <Persons persons= {persons} deleteName = {deleteData}/>
     </div>
   )
 }

@@ -47,6 +47,6 @@ it will be defined in  `process.env` and can be used as :
 
 -Adding ID to listed elements is still pain in the ass.
 
--Wasted like 2 hours trying to figure out a problem related to Event loops -> webAPI -> callback queue (LIFECYCLE? ) 
+-Wasted like 2 hours trying to figure out a problem related to Event loops -> webAPI -> callback queue (JavaScript Runtime?) 
 
 after setting the state from set[stateName] by using useEffect (Data fetching), the data is received in second loop only .So, console logging may generate error if data isnt present.
