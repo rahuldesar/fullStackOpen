@@ -3,12 +3,15 @@ import HandleFilter from './components/HandleFilter';
 import Persons from './components/Persons';
 import PersonForm from './components/PersonForm';
 import phonebook from './services/phonebook';
+import Notification from './components/Notification';
+import './index.css';
+
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('');
-  
+  const [notification, setNotification] = useState([]);
   let effect = () =>{
     phonebook.getAll()
     .then(response =>{
@@ -63,6 +66,12 @@ const App = () => {
           newNameObj.id = response.data.id;
           setPersons (persons.concat(newNameObj));
         });
+      setNotification(
+        [`${newNameObj.name} added`,'success']
+      )
+      setTimeout(() => {
+        setNotification([])
+      }, 5000)
       }
     }
 
@@ -75,17 +84,22 @@ const App = () => {
       .then(response =>
         alert(`${tempName} removed`)
       )
+      .catch(error => {
+        setNotification([`Note '${tempName}' was already removed from server`,'fail']) 
+        setTimeout(() => {
+          setNotification([])
+        }, 5000)})
       let tempPersons = persons.filter(person => person.id !== id);
       setPersons(tempPersons);
-    } else {
-      console.log("UNABLE TO DELETE");
-    }
+    } 
+
   }
 
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification} />
       <HandleFilter handleFilter = { handleFilter }/>
       <h2>Add a new</h2>
       <PersonForm newName = {newName} changeNewName = {changeNewName}
