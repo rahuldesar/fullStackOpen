@@ -1,4 +1,5 @@
 # Things to Remember for Dev
+
 1. [Warning](https://fullstackopen.com/en/part1/a_more_complex_state_debugging_react_apps#do-not-define-components-within-components) create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
 <b>Most likely you do not want each of your projects to be a separate repository</b>, so simply run the `rm -rf .git` command at the root of your application.
 
@@ -34,6 +35,34 @@ Creating a new resource for storing a note is done by making an `HTTP POST` requ
 json-server requires all data to be sent in JSON format. i.e request must contain `Content-Type` request header with the value `application/json`
 
 
-
-
 `An important detail to remember is that the concat method does not change the component's original state, but instead creates a new copy of the list.`
+
+
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+
+## axios 
+## express
+## json-server
+## nodemon
+## mongoose
+## fly.io / heroku
+## dotenv
+## jest  >  mocha
+## CORS
+## eslint
+## crossenv? for windows 
+## supertest
+## express-async-errors
+
+
+-----------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+
+
+### chakra ui // material ui
+
+<b>sudo kill -9 `sudo lsof -t -i:3001` </b>
+

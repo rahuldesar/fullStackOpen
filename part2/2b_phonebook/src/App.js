@@ -65,10 +65,18 @@ const App = () => {
           console.log(`${response.data.name} added`)
           newNameObj.id = response.data.id;
           setPersons (persons.concat(newNameObj));
-        });
-      setNotification(
-        [`${newNameObj.name} added`,'success']
-      )
+          setNotification(
+            [`${newNameObj.name} added`,'success']
+          )
+        })
+      .catch(error =>{
+        console.log(error.response.data.error);
+        setNotification(
+          [`${error.response.data.error}`,'fail']
+        )
+      }
+        )
+      
       setTimeout(() => {
         setNotification([])
       }, 5000)
