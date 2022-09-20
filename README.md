@@ -55,6 +55,8 @@ json-server requires all data to be sent in JSON format. i.e request must contai
 ## crossenv? for windows 
 ## supertest
 ## express-async-errors
+## bcrypt
+## jsonwebtoken / JWT
 
 
 -----------------------------------------------------------------------------
