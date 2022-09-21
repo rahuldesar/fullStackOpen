@@ -57,7 +57,7 @@ json-server requires all data to be sent in JSON format. i.e request must contai
 ## express-async-errors
 ## bcrypt
 ## jsonwebtoken / JWT
-
+## propTypes
 
 -----------------------------------------------------------------------------
 

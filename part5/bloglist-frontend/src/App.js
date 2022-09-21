@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react';
 import blogService from './services/blogs';
 import loginService from './services/login';
 import Notification from './components/Notification';
@@ -20,17 +20,17 @@ const App = () => {
     blogService.getAll().then(unsortedBlogs =>
       unsortedBlogs.sort((a,b) => b.likes - a.likes)
     )
-    .then(sortedBlogs => 
-      setBlogs(sortedBlogs))  
-  }, [])
+      .then(sortedBlogs =>
+        setBlogs(sortedBlogs));
+  }, []);
 
   useEffect(() => {
-      const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
-      if(loggedUserJSON){
-        const user = JSON.parse(loggedUserJSON);
-        setUser(user);
-        blogService.setToken(user.token);
-      }
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
+    if(loggedUserJSON){
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      blogService.setToken(user.token);
+    }
   }, []);
 
   const handleLogin = async ( event ) => {
@@ -44,7 +44,7 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       );
-      
+
       blogService.setToken(user.token);
       // console.log("USER FROM LOGIN ", user);
       setUser(user);
@@ -66,9 +66,9 @@ const App = () => {
     setTimeout(() => {
       setNotification([]);
     }, 4000);
-  }
+  };
 
-  const handleLogout =() => {
+  const handleLogout = () => {
     let user = window.localStorage.getItem('loggedBlogappUser');
     user = JSON.parse(user);
     window.localStorage.removeItem('loggedBlogappUser');
@@ -79,9 +79,7 @@ const App = () => {
       setNotification([]);
     }, 4000);
     setUser(null);
-
-    
-  }
+  };
 
   const loginForm = () => {
     return(
@@ -89,19 +87,19 @@ const App = () => {
         <div>
           Username
           <input type="text" value={username} name="Username"
-          onChange={({ target }) => setUsername(target.value)}/>
+            onChange={({ target }) => setUsername(target.value)}/>
         </div>
         <div>
           Password
-          <input type="password" value={password} name="Password" 
-          onChange={({ target }) => setPassword(target.value)}/>
+          <input type="password" value={password} name="Password"
+            onChange={({ target }) => setPassword(target.value)}/>
         </div>
         <button type="submit"> LOGIN </button>
       </form>
-    )
+    );
   };
 
-  const handleNewBlogCreate = (blogObject) => {  
+  const handleNewBlogCreate = (blogObject) => {
     blogFormRef.current.toggleVisibility();
     blogService
       .create(blogObject)
@@ -110,22 +108,22 @@ const App = () => {
         setNotification(
           [`Blog Added: ${returnedNote.title} - ${returnedNote.author} `,'success']
         );
-      console.log(notification);
+        console.log(notification);
       })
       .catch( error => {
         setNotification(
-          `Adding Blog failure. Check if data is in correct format.`,'fail'
+          'Adding Blog failure. Check if data is in correct format.','fail'
         );
-      console.log(notification);
-      console.log(error);
-      })
+        console.log(notification);
+        console.log(error);
+      });
     setTimeout(() => {
       setNotification([]);
     }, 4000);
-  }
+  };
 
-  const handleBlogUpdate = (id , newBlog) =>{
-    console.log("newBlog",newBlog);
+  const handleBlogUpdate = (id , newBlog) => {
+    console.log('newBlog',newBlog);
     blogService
       .update(id, newBlog)
       .then(returnedBlog => {
@@ -137,34 +135,34 @@ const App = () => {
       })
       .catch( error => {
         setNotification(
-          `Updating Blog failure.`,'fail'
+          `Updating Blog failure. error : ${error}`,'fail'
         );
-      })
-      setTimeout(() => {
-        setNotification([]);
-      }, 4000);
-  }
+      });
+    setTimeout(() => {
+      setNotification([]);
+    }, 4000);
+  };
 
-  const handleBlogRemove = (id) =>{
+  const handleBlogRemove = (id) => {
     const blog = blogs.find(n => n.id === id);
-    const deleteBlog = { ...blog}
+    const deleteBlog = { ...blog };
     let tempName = deleteBlog.title;
     let tempAuthor = deleteBlog.author;
     if (window.confirm(`Remove Blog : ${tempName} by ${tempAuthor}`)) {
       blogService.remove(deleteBlog.id)
-      .then(() =>
-        setNotification([`${tempName} removed`,'success'])
-      )
-      .catch(error => {
-        setNotification([`Note '${tempName}' was already removed from server`,'fail']) 
-        })
+        .then(() =>
+          setNotification([`${tempName} removed`,'success'])
+        )
+        .catch(error => {
+          setNotification([`Note '${tempName}' was already removed from server. Error ; ${error}`,'fail']);
+        });
       setTimeout(() => {
-        setNotification([])
+        setNotification([]);
       }, 4000);
       let tempBlogs = blogs.filter(blog => blog.id !== id);
       setBlogs(tempBlogs);
-    } 
-  }
+    }
+  };
 
 
   return (
@@ -173,29 +171,29 @@ const App = () => {
 
       {
         user === null?
-        loginForm() :
-        <div>
-          <h2>blogs</h2>
-          <span>{user.username} ( {user.name} ) logged in    </span>
-          <button onClick={handleLogout}> Logout </button>
-          <br></br>
-          <br></br>
-        
-          <Togglable buttonLabel='Create New Blog' ref ={blogFormRef}>
-            <BlogForm  handleNewBlogCreate = { handleNewBlogCreate }  />
-          </Togglable>
-          <br></br>
+          loginForm() :
+          <div>
+            <h2>blogs</h2>
+            <span>{user.username} ( {user.name} ) logged in    </span>
+            <button onClick={handleLogout}> Logout </button>
+            <br></br>
+            <br></br>
 
-          <BlogList 
-          blogs = {blogs}
-          handleBlogUpdate={ handleBlogUpdate } 
-          handleBlogRemove = {handleBlogRemove}
-          user = {user}
-          />
-        </div>
+            <Togglable buttonLabel='Create New Blog' ref ={blogFormRef}>
+              <BlogForm  handleNewBlogCreate = { handleNewBlogCreate }  />
+            </Togglable>
+            <br></br>
+
+            <BlogList
+              blogs = {blogs}
+              handleBlogUpdate={ handleBlogUpdate }
+              handleBlogRemove = {handleBlogRemove}
+              user = {user}
+            />
+          </div>
       }
     </div>
-  )
-}
+  );
+};
 
 export default App;

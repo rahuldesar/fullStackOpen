@@ -6,10 +6,10 @@ const Notification = ({ notification }) => {
     return null;
   }
   return (
-    <div id="FromNotification"> 
-    <div className={notificationStyle}  > {notificationText} </div>
+    <div id="FromNotification">
+      <div className={notificationStyle}  > {notificationText} </div>
     </div>
-  )
-}
+  );
+};
 
 export default Notification;
