@@ -36,3 +36,58 @@ Network requests, manual DOM mutations, and logging are common examples of effec
 
 
 we might want to set up a subscription to some external data source. In that case, it is important to clean up so that we don’t introduce a memory leak!
+
+--------------------------------------------------------------------------------------
+
+### Testing 
+`npm install --save-dev @testing-library/react @testing-library/jest-dom`
+
+test renders the component with the `render` function provided by the react-testing-library.
+
+We can use the object `screen` to access the rendered component.
+
+useful `screen` methods are :
+
+`getByText`   
+`findByText`        `findAllByText`
+
+`getByRole`         `getAllByRole`
+
+`getByPlaceholderText`
+
+
+
+
+For Debugging, we use `screen.debug()`
+
+This gives us HTML view of our test.
+
+
+`npm install --save-dev @testing-library/user-event`
+
+library `user-event` that makes simulating user input like, button press, easier 
+
+
+NOTE : `npm install -D --exact jest-watch-typeahead@0.6.5` install this package to solve problem of mismatch between the version of a dependency jest-watch-typeahead that create-react-app and user-event are using. 
+
+
+--------------------------------------------------------------------------------------
+
+import React from 'react'
+
+import '@testing-library/jest-dom/extend-expect'
+
+import { render, screen } from '@testing-library/react'
+
+import userEvent from '@testing-library/user-event'
+
+
+### Running test 
+
+CI=true npm test
+
+CI=true npm test -- --coverage
+
+--------------------------------------------------------------------------------------
+
+`container.querySelector`

@@ -49,7 +49,7 @@ json-server requires all data to be sent in JSON format. i.e request must contai
 ## mongoose
 ## fly.io / heroku
 ## dotenv
-## jest  >  mocha
+## jest  >  mocha -> for integration and unit testing
 ## CORS
 ## eslint
 ## crossenv? for windows 
@@ -58,6 +58,7 @@ json-server requires all data to be sent in JSON format. i.e request must contai
 ## bcrypt
 ## jsonwebtoken / JWT
 ## propTypes
+## cypress -> for E2E testing 
 
 -----------------------------------------------------------------------------
 
