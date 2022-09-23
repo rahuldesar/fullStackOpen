@@ -91,3 +91,22 @@ CI=true npm test -- --coverage
 --------------------------------------------------------------------------------------
 
 `container.querySelector`
+
+
+--------------------------------------------------------------------------------------
+
+## cypress
+
+`visit`
+
+`contains`
+
+`get`
+
+`type`
+
+`request`
+
+`should` : bit complicated. Common assertions that are used with `should` can be found <a href="https://docs.cypress.io/guides/references/assertions.html#Common-Assertions"> HERE </a>
+
+`and` - chain multiple test for same component. <a href='https://docs.cypress.io/api/commands/and.html'> MORE DETAILS </a>

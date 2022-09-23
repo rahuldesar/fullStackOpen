@@ -68,23 +68,23 @@ const Blog = ({ blog, handleBlogUpdate, handleBlogRemove, user }) => {
         <div>
           {blog.title} - {blog.author}
         </div>
-        <button style={btnStyle} onClick= {toggleVisibility}> view </button>
+        <button id='blog-view-button' style={btnStyle} onClick= {toggleVisibility}> view </button>
       </div>
     );
   } else {
     return(
       <div style = { { ...blogStyle, ...flexContainer }}>
-        <div>
+        <div id="blog-heading">
           {blog.title} - {blog.author}
-          <div>{ blog.url }</div>
-          <div>
+          <div id="blog-url">{ blog.url }</div>
+          <div id="blog-likes">
             { blog.likes }
-            <button style={btnStyle2} onClick={handleLike}> Like </button>
+            <button id="blog-like-button" style={btnStyle2} onClick={handleLike}> Like </button>
           </div>
-          <div>{blog.user.username} - ( {blog.user.name } )</div>
+          <div id="blog-username" >{blog.user.username} - ( {blog.user.name } )</div>
 
           { user.username === blog.user.username?
-            <button style = {btnStyle} onClick={ handleRemove }> Remove </button>
+            <button id="blog-remove-button" style = {btnStyle} onClick={ handleRemove }> Remove </button>
             :
             <></>
           }

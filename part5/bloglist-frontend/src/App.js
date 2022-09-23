@@ -17,11 +17,8 @@ const App = () => {
   const blogFormRef = useRef();
 
   useEffect(() => {
-    blogService.getAll().then(unsortedBlogs =>
-      unsortedBlogs.sort((a,b) => b.likes - a.likes)
-    )
-      .then(sortedBlogs =>
-        setBlogs(sortedBlogs));
+    blogService.getAll().then(blogs =>
+      setBlogs(blogs));
   }, []);
 
   useEffect(() => {
@@ -86,15 +83,19 @@ const App = () => {
       <form onSubmit={handleLogin}>
         <div>
           Username
-          <input type="text" value={username} name="Username"
+          <input type="text" value={username}
+            id="login-username"
+            name="Username"
             onChange={({ target }) => setUsername(target.value)}/>
         </div>
         <div>
           Password
-          <input type="password" value={password} name="Password"
+          <input type="password"
+            id="login-password"
+            value={password} name="Password"
             onChange={({ target }) => setPassword(target.value)}/>
         </div>
-        <button type="submit"> LOGIN </button>
+        <button id="login-button" type="submit"> LOGIN </button>
       </form>
     );
   };
@@ -175,7 +176,7 @@ const App = () => {
           <div>
             <h2>blogs</h2>
             <span>{user.username} ( {user.name} ) logged in    </span>
-            <button onClick={handleLogout}> Logout </button>
+            <button id="logout-button" onClick={handleLogout}> Logout </button>
             <br></br>
             <br></br>
 

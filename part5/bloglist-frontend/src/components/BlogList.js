@@ -5,7 +5,7 @@ const BlogList = ({ blogs, handleBlogUpdate, handleBlogRemove, user }) => {
 
   return(
     <>
-      {blogs.map(blog =>
+      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
         <Blog key={blog.id}
           blog={blog}
           handleBlogUpdate={ handleBlogUpdate }
