@@ -60,11 +60,11 @@ describe('Blog app', function() {
 
       it('Testing if user can like a blog',function(){
         cy.contains('title written by cypress - author written by cypress')
-          .parent().find('#blog-view-button').click();
+          .parent().find('.blog-view-button').click();
         cy.contains('title written by cypress - author written by cypress')
-          .find('#blog-like-button').click();
+          .find('.blog-like-button').click();
         cy.contains('title written by cypress - author written by cypress')
-          .find('#blog-likes').should('contain','1');
+          .find('.blog-likes').should('contain','1');
       });
 
       it('Testing if user can like a blog if there are multiple blogs',function(){
@@ -80,18 +80,18 @@ describe('Blog app', function() {
         });
 
         cy.contains('title written by cypress2 - author written by cypress2')
-          .parent().find('#blog-view-button').as('view-button1');
+          .parent().find('.blog-view-button').as('view-button1');
         cy.get('@view-button1').click();
-        cy.get('@view-button1').parent().find('#blog-like-button').click();
+        cy.get('@view-button1').parent().find('.blog-like-button').click();
         cy.get('@view-button1').parent()
-          .find('#blog-likes').should('contain','1');
+          .find('.blog-likes').should('contain','1');
       });
 
       it('Testing if user can delete a blog',function(){
         cy.contains('title written by cypress - author written by cypress')
-          .parent().find('#blog-view-button').as('view-button1');
+          .parent().find('.blog-view-button').as('view-button1');
         cy.get('@view-button1').click();
-        cy.get('@view-button1').parent().get('#blog-remove-button').should('exist');
+        cy.get('@view-button1').parent().get('.blog-remove-button').should('exist');
       });
 
       it('Testing if Another user can delete a blog',function(){
@@ -106,11 +106,63 @@ describe('Blog app', function() {
         cy.login({ username: 'roottest2', password: 'test1234' });
 
         cy.contains('title written by cypress - author written by cypress')
-          .parent().find('#blog-view-button').as('view-button1');
+          .parent().find('.blog-view-button').as('view-button1');
         cy.get('@view-button1').click();
-        cy.get('@view-button1').parent().get('#blog-remove-button').should('not.exist');
+        cy.get('@view-button1').parent().get('.blog-remove-button').should('not.exist');
       });
 
+    });
+
+  });
+
+  describe('Adding multiple blogs', function(){
+    beforeEach(function() {
+      cy.login({ username: 'roottest', password: 'test1234' });
+      cy.createBlog({
+        title: 'title written by cypress',
+        author: 'author written by cypress',
+        url: 'url written by cypresss',
+        likes: 1
+      });
+      cy.createBlog({
+        title: 'title written by cypress2',
+        author: 'author written by cypress2',
+        url: 'url written by cypresss2',
+        likes: 12
+      });
+      cy.createBlog({
+        title: 'title written by cypress3',
+        author: 'author written by cypress3',
+        url: 'url written by cypresss3',
+        likes: 8
+
+      });
+      cy.createBlog({
+        title: 'title written by cypress4',
+        author: 'author written by cypress4',
+        url: 'url written by cypresss4',
+        likes: 88
+      });
+    });
+
+    it('Testing if likes are sorted.', function(){
+      cy.get('.blog-view-button').each((btn) => btn.click());
+      cy.get('[data-attr="blog-wrapper"]').then(($blog) => {
+        expect($blog).to.have.length(4);
+        for (let i = 0; i < $blog.length; i++) {
+          if (i < $blog.length - 1) {
+            expect(
+              Number($blog.find('[data-attr="likes-wrapper"]')[i].innerText),
+            ).to.be.least(
+              Number($blog.find('[data-attr="likes-wrapper"]')[i + 1].innerText),
+            );
+          } else {
+            expect(
+              Number($blog.find('[data-attr="likes-wrapper"]')[i].innerText),
+            ).to.be.most(Number($blog.find('[data-attr="likes-wrapper"]')[0].innerText));
+          }
+        }
+      });
     });
 
   });
