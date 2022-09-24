@@ -1,0 +1,1 @@
+EXERCISE FROM 6.1 +
