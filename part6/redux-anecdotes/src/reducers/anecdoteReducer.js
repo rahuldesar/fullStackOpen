@@ -7,8 +7,10 @@ const anecdotesAtStart = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
+//Random ID generator used to create new Anecdote.
 const getId = () => (100000 * Math.random()).toFixed(0)
 
+//Boiler plate of anecdote
 const asObject = (anecdote) => {
   return {
     content: anecdote,
@@ -17,13 +19,55 @@ const asObject = (anecdote) => {
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
+//changine array of strings to array of objects.
+const initialState = anecdotesAtStart.map(asObject);
+
+
 
 const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-
-  return state
+  switch (action.type) {
+    case 'NEW_ANECDOTE':{
+      //action= {type, data} && action.data = {content, votes, id}
+      state = [...state, action.data];
+      return state;
+    }
+    
+    case 'VOTE_ANECDOTE': {
+      //action = {type, data} , action.data = {id}
+      const id = action.data.id;
+      const anecdoteToChange = state.find(anecdote => anecdote.id === id);
+      const changedAnecdote = {
+        ...anecdoteToChange,
+        votes : anecdoteToChange.votes + 1
+      } 
+      
+      return state.map(anecdote => anecdote.id !== id ? anecdote : changedAnecdote);
+    }
+    
+    default:
+    return state;
+  }
 }
 
-export default reducer
+//extra Functions (ACTION CREATORS?)  to export 
+//USE THIS TO CREATE ACTION FOR EASIER DISPATCH.
+export const createAnecdote = ( content ) => {
+  return{
+    type : 'NEW_ANECDOTE',
+    data : {
+      content,
+      votes : 0,
+      id: getId()
+    }
+  };
+};
+
+export const voteAnecdote= ( id ) => {
+  return { 
+    type : 'VOTE_ANECDOTE',
+    data : { id }
+  }
+}
+
+//default export so that we can import like `import anecdoteReducer from './reducers/anecdoteReducer'`
+export default reducer;
