@@ -26,4 +26,25 @@ const noteReducer = (state = [{content: 'xxADDED BY REDUX REDUCER2xx', important
   }
 };
 
+const generateId = () => Number((Math.random()*1_000_000).toFixed(0));
+
+  // Functions that create actions are called action creators.
+export const createNote = ( content ) => {
+  return{
+    type : 'NEW_NOTE',
+    data : {
+      content,
+      important : false,
+      id: generateId()
+    }
+  };
+};
+
+export const toggleImportanceOf = ( id ) => {
+  return { 
+    type : 'TOGGLE_IMPORTANCE',
+    data : { id }
+  }
+}
+
 export default noteReducer;
