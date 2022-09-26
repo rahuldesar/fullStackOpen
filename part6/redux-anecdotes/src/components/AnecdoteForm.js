@@ -1,21 +1,22 @@
 import { createAnecdote } from '../reducers/anecdoteReducer';
 import { useDispatch } from 'react-redux';
-import { createAnecdoteNotification, resetNotification} from '../reducers/notificationReducer';
+import { setNotification } from '../reducers/notificationReducer';
+
 const AnecdoteForm = () => {
   const dispatch = useDispatch();
 
   //Create new anecdote with textvalue from input box with name = "newAnecdote",
   // id is generated with another fxn, and vote is set to zero as default.
-  const createNewAnecdote = (event) => {
+  const createNewAnecdote = async (event) => {
     event.preventDefault();
     let content = event.target.newAnecdote.value;
     event.target.newAnecdote.value = '';
+
     dispatch(createAnecdote(content));
-    dispatch(createAnecdoteNotification(content));
-    setTimeout( () =>{
-    dispatch(resetNotification(''));
-    },3000);
+    dispatch(setNotification(`you added "${content}"`, 3));
   }
+
+
   return ( 
     <>
     <h2>create new</h2>

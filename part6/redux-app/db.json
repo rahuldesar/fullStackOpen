@@ -1,0 +1,39 @@
+{
+  "notes": [
+    {
+      "content": "DB the app state is in redux store",
+      "important": true,
+      "id": 1
+    },
+    {
+      "content": "DB state changes are made with actions",
+      "important": false,
+      "id": 2
+    },
+    {
+      "content": "asdasd",
+      "important": false,
+      "id": 3
+    },
+    {
+      "content": "aaaaaaaaaaaa",
+      "important": false,
+      "id": 4
+    },
+    {
+      "content": "testettest",
+      "important": false,
+      "id": 6
+    },
+    {
+      "content": "tweewt",
+      "important": false,
+      "id": 7
+    },
+    {
+      "content": "zzzzzzzzzzzzzzzzzzzzzz",
+      "important": false,
+      "id": 8
+    }
+  ]
+}

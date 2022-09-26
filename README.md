@@ -59,6 +59,9 @@ json-server requires all data to be sent in JSON format. i.e request must contai
 ## jsonwebtoken / JWT
 ## propTypes
 ## cypress -> for E2E testing 
+## redux
+## redux-thunk
+
 
 -----------------------------------------------------------------------------
 

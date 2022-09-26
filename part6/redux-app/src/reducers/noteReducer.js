@@ -1,20 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-
-const initialState = [
-  {
-    content: 'reducer defines how redux works',
-    important: true,
-    id:1,
-  },
-  {
-    content: 'state of store can contain any data',
-    important: false,
-    id:2,
-  }
-]
+import NewNote from '../components/NewNote';
+import noteService from '../services/notes';  
 
 //REPLACED BY createSlice
-
+//
 // const noteReducer = (state = initialState , action) => {
 //   console.log('ACTION: ', action);
 //   switch (action.type) {
@@ -42,9 +31,9 @@ const initialState = [
 //   }
 // };
 
-const generateId = () => Number((Math.random()*1_000_000).toFixed(0));
+// const generateId = () => Number((Math.random()*1_000_000).toFixed(0));
 
-  // Functions that create actions are called action creators.
+// *** Functions that create actions are called action creators. ***
 // export const createNote = ( content ) => {
 //   return{
 //     type : 'NEW_NOTE',
@@ -65,18 +54,8 @@ const generateId = () => Number((Math.random()*1_000_000).toFixed(0));
 
 const noteSlice = createSlice({
   name: 'notes',
-  initialState,
+  initialState : [],
   reducers: {
-    createNote(state, action) {
-      const content = action.payload
-      // redux toolkit uses Immer library, which uses the mutated state to produce new immutable state
-      // SO we can use PUSH even though it violates reducer's immutability principle.
-      state.push({
-        content,
-        important: false,
-        id: generateId(),
-      })
-    },
     toggleImportanceOf(state, action) {
       const id = action.payload
       const noteToChange = state.find(n => n.id === id)
@@ -87,9 +66,28 @@ const noteSlice = createSlice({
       return state.map(note =>
         note.id !== id ? note : changedNote 
       )     
+    },
+    appendNote(state, action) {
+      state.push(action.payload);
+    },
+    setNotes(state, action){
+      return action.payload;
     }
   },
 })
 
-export const { createNote, toggleImportanceOf } = noteSlice.actions
+export const initializeNotes = () => {
+  return async dispatch => {
+    const notes = await noteService.getAll();
+    dispatch(setNotes(notes));
+  };
+};
+
+export const createNote = content => {
+  return async dispatch => {
+    dispatch(appendNote(NewNote));
+  };
+};
+
+export const { toggleImportanceOf, appendNote, setNotes } = noteSlice.actions
 export default noteSlice.reducer
