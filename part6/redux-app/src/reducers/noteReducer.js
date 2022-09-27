@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import NewNote from '../components/NewNote';
 import noteService from '../services/notes';  
 
+//______________________________________________________________________
 //REPLACED BY createSlice
-//
+//-----------------------------------------------------------------------
 // const noteReducer = (state = initialState , action) => {
 //   console.log('ACTION: ', action);
 //   switch (action.type) {
@@ -30,6 +30,7 @@ import noteService from '../services/notes';
 //     return state;
 //   }
 // };
+//--------------------------------------------------------------------
 
 // const generateId = () => Number((Math.random()*1_000_000).toFixed(0));
 
@@ -55,6 +56,7 @@ import noteService from '../services/notes';
 const noteSlice = createSlice({
   name: 'notes',
   initialState : [],
+
   reducers: {
     toggleImportanceOf(state, action) {
       const id = action.payload
@@ -63,13 +65,16 @@ const noteSlice = createSlice({
         ...noteToChange, 
         important: !noteToChange.important 
       }
+      
       return state.map(note =>
         note.id !== id ? note : changedNote 
       )     
     },
+
     appendNote(state, action) {
       state.push(action.payload);
     },
+
     setNotes(state, action){
       return action.payload;
     }
@@ -83,11 +88,12 @@ export const initializeNotes = () => {
   };
 };
 
-export const createNote = content => {
+export const createNote = (content) => {
   return async dispatch => {
-    dispatch(appendNote(NewNote));
+    dispatch(appendNote(content));
   };
 };
+
 
 export const { toggleImportanceOf, appendNote, setNotes } = noteSlice.actions
 export default noteSlice.reducer

@@ -1,9 +1,10 @@
+import { connect } from 'react-redux';
 import { createAnecdote } from '../reducers/anecdoteReducer';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { setNotification } from '../reducers/notificationReducer';
 
-const AnecdoteForm = () => {
-  const dispatch = useDispatch();
+const AnecdoteForm = (props) => {
+  // const dispatch = useDispatch();
 
   //Create new anecdote with textvalue from input box with name = "newAnecdote",
   // id is generated with another fxn, and vote is set to zero as default.
@@ -12,8 +13,8 @@ const AnecdoteForm = () => {
     let content = event.target.newAnecdote.value;
     event.target.newAnecdote.value = '';
 
-    dispatch(createAnecdote(content));
-    dispatch(setNotification(`you added "${content}"`, 3));
+    props.createAnecdote(content);
+    props.setNotification(`you added "${content}"`, 3);
   }
 
 
@@ -29,4 +30,7 @@ const AnecdoteForm = () => {
   )
 }
 
-export default AnecdoteForm;
+export default connect(
+  null,
+  { setNotification, createAnecdote}
+)(AnecdoteForm);

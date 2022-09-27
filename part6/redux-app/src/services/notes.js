@@ -12,7 +12,8 @@ const createNew = async(content) => {
   const noteObj = {content, important:false };
   const response = await axios.post(baseUrl, noteObj);
   return response.data;
-}
+};
+
 
 export default { 
   getAll,

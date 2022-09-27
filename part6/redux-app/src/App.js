@@ -1,25 +1,19 @@
-import { useEffect } from 'react';
-
 import Notes from './components/Notes';
 import NewNote from './components/NewNote';
 import VisibilityFilter from './components/VisibilityFilter';
 
-import noteService from './services/notes';
+import { useEffect } from 'react';
 import { initializeNotes } from './reducers/noteReducer';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-const App = () => {
 
+
+const App = () => {
   const dispatch = useDispatch();
-  
-  
+
   useEffect(() => {
     dispatch(initializeNotes())  
   }, [dispatch]) 
 
-  
-
-  
   return (
     <div>
       <NewNote />
