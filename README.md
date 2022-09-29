@@ -62,13 +62,18 @@ json-server requires all data to be sent in JSON format. i.e request must contai
 ## redux
 ## redux-thunk
 
-
+## react-router-dom
+## React-BootStrap
+## Material UI
 -----------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------
 
 
-### chakra ui // material ui
+### UI COMPONENTS - FRAMEWORKS
+## Tailwind CSS > Material ui > Bootstrap >>> Chakra UI > Bulma
+## styled-component is cool too.
+
 
 <b>sudo kill -9 `sudo lsof -t -i:3001` </b>
 
