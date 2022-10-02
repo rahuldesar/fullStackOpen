@@ -10,6 +10,16 @@ import { initializeBlogs } from './reducers/blogsReducer';
 import { setUser } from './reducers/userReducer';
 import LoginForm from './components/LoginForm';
 import BlogListHeader from './components/BlogListHeader';
+import {
+  Routes,
+  Route,
+  // Link,
+  // Navigate,
+  // useNavigate,
+  // useMatch
+} from 'react-router-dom';
+import UserBlogList from './components/UserBlogList';
+
 
 
 const App = () => {
@@ -38,16 +48,23 @@ const App = () => {
       {user === null ? (
         <LoginForm />
       ) : (
-        <div>
+        <>
           <BlogListHeader />
+          <h2> BLOG APP</h2>
           <br />
-
           <Togglable buttonLabel="Create New Blog" ref={blogFormRef}>
             <BlogForm />
           </Togglable>
           <br />
-          <BlogList />
-        </div>
+          <Routes>
+            <Route path="/" element = {
+              <div>
+                <BlogList />
+              </div>
+            }/>
+            <Route path="/users" element ={<UserBlogList/>}/>
+          </Routes>
+        </>
       )}
     </div>
   );

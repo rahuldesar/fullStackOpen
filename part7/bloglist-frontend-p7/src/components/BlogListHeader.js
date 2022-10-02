@@ -1,6 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setNotification, clearNotification } from '../reducers/notificationReducer';
 import { resetUser } from '../reducers/userReducer';
+import {
+  // Routes,
+  // Route,
+  Link,
+  // Navigate,
+  // useNavigate,
+  // useMatch
+} from 'react-router-dom';
+
 
 const BlogListHeader = ( ) => {
 
@@ -19,15 +28,16 @@ const BlogListHeader = ( ) => {
   };
 
   return (
-    <>
-      <h2>blogs</h2>
+    <div>
+      <Link to="/"> blogs </Link>
+      <Link to="/users"> users </Link>
       <span>
         {user.username} ( {user.name} ) logged in{' '}
       </span>
       <button id="logout-button" onClick={handleLogout}>
         Logout
       </button>
-    </>
+    </div>
   );
 };
 
