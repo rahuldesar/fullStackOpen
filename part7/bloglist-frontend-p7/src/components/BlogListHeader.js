@@ -32,7 +32,7 @@ const BlogListHeader = ( ) => {
       <Link to="/"> blogs </Link>
       <Link to="/users"> users </Link>
       <span>
-        {user.username} ( {user.name} ) logged in{' '}
+        <i>{user.username} ( {user.name} ) logged in{' '}</i>
       </span>
       <button id="logout-button" onClick={handleLogout}>
         Logout

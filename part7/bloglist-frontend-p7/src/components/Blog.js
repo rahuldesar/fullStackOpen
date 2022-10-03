@@ -32,13 +32,11 @@ const Blog = ({ blog, user }) => {
   const btnStyle = {
     paddingLeft: 50,
     paddingRight: 50,
-    marginLeft: 30,
   };
 
-  const btnStyle2 = {
+  const btnLikeStyle = {
     paddingLeft: 30,
     paddingRight: 30,
-    marginLeft: 30,
     paddingTop: 5,
     paddingBottom: 5,
   };
@@ -92,7 +90,7 @@ const Blog = ({ blog, user }) => {
             <div data-attr="likes-wrapper">{blog.likes}</div>
             <button
               className="blog-like-button"
-              style={btnStyle2}
+              style={btnLikeStyle}
               onClick={handleLike}
             >
               {' '}

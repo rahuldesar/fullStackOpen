@@ -2,12 +2,14 @@ import { useField } from '../hooks/newBlogHook';
 import { createBlog } from '../reducers/blogsReducer';
 import { useDispatch } from 'react-redux';
 import { setNotification, clearNotification } from '../reducers/notificationReducer';
+import '../static/blogForm.css';
+
 
 const BlogForm = ( ) => {
   const title = useField('text');
   const author = useField('text');
   const url = useField('text');
-  console.log(title, author, url);
+  // console.log(title, author, url);
 
   const dispatch = useDispatch();
 
@@ -38,7 +40,7 @@ const BlogForm = ( ) => {
 
 
   return (
-    <form onSubmit={handleNewBlog}>
+    <form className='submit-form' onSubmit={handleNewBlog}>
       <div>
         Title :
         <input
@@ -78,4 +80,3 @@ const BlogForm = ( ) => {
 };
 
 export default BlogForm;
-

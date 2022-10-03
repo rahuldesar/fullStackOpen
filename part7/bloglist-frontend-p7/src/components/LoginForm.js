@@ -4,7 +4,8 @@ import blogService from '../services/blogs';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../reducers/userReducer';
 import { setNotification, clearNotification } from '../reducers/notificationReducer';
-
+import '../static/form.css';
+// import { Navigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -28,6 +29,7 @@ const LoginForm = () => {
         `Login Successful : Logged-in as ${username}`,
         'success',
       ]));
+
       setUsername('');
       setPassword('');
     } catch (exception) {
@@ -43,34 +45,38 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>
-        Username
-        <input
-          type="text"
-          value={username}
-          id="login-username"
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        Password
-        <input
-          type="password"
-          id="login-password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button id="login-button" type="submit">
-        {' '}
-        LOGIN{' '}
-      </button>
-    </form>
+    <div className="login-box">
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+        <div className="user-box">
+          <input
+            type="text"
+            value={username}
+            id="login-username"
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+          <label>Username</label>
+        </div>
+        <div className='user-box'>
+          <input
+            type="password"
+            id="login-password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+          <label>Password</label>
+        </div>
+        <button id="login-button" type="submit">
+          {' '}
+          LOGIN{' '}
+        </button>
+      </form>
+    </div>
   );
 };
 
 
 export default LoginForm;
+
