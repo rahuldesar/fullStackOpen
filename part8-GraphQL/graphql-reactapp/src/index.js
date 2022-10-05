@@ -27,8 +27,7 @@ const query = gql`
 
 client.query({ query })
   .then((response) => {
-    console.log(response.data);
-    console.log('YO');
+    console.log("INDEX.JS RESPONSE QUERY : ",response.data);
   })
 
 ReactDOM.createRoot(document.getElementById('root')).render(
