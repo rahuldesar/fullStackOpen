@@ -1,5 +1,3 @@
-### Apollo cient - GraphQL - React
+## READ THIS .
 
-`useQuery` Hook: Intro.
-
-
+This app uses Apollo server backend, which is not added in this repository.
