@@ -6,6 +6,7 @@ const Author = require('./models/author');
 const Book = require('./models/book');
 const User = require('./models/user');
 const jwt = require('jsonwebtoken');
+const author = require('./models/author');
 
 const db = process.env.MONGODB_URI;
 const jwt_secret = process.env.SECRET;
@@ -48,7 +49,7 @@ mongoose.connect(db)
     bookCount: Int!
     authorCount: Int!
     allAuthors: [Author!]!
-    allBooks(author: String , genre : [String!]): [Book!]!
+    allBooks(author: String , genre : String): [Book!]!
     me: User
   },
 
@@ -91,20 +92,32 @@ const resolvers = {
     authorCount: async() => Author.collection.countDocuments(),
 
     allBooks: async (root, args) => {
-      return await Book.find({});
+      const books =  await Book.find({}).populate('author');
+      
+      const filterByGenre = (authorBooks, genreToFilter ) => 
+      authorBooks.filter(book => book.genres.includes(genreToFilter));
+
+      
+
+
+      if( !args.author ) {
+        if(!args.genre)
+          return books 
+        else return filterByGenre(books, args.genre);
+      } else {
+        const authorsBook = books.filter(book => book.author.name === args.author)
+        if(!args.genre) return authorsBook;
+        else return filterByGenre(authorsBook, args.genre);
+      }
+      
       
       // TODO IMPLEMENT FILTER
       // ! REMOVING TEMPORARILY
     /*   const filterByGenre = (authorBooks, genreToFilter) => 
         authorBooks.filter(book => book.genres.includes(genreToFilter))
 
-      if( !args.author ) {
-        if(!args.genre) return books;
-        else return filterByGenre(books, args.genre);
       } else {
         const authorsBook = books.filter(book => book.author === args.author);
-        if(!args.genre) return authorsBook;
-        else return filterByGenre(authorsBook, args.genre);
       } */
 
 
@@ -259,8 +272,8 @@ const resolvers = {
     },
 
     login: async (root,args) => {
-      let user = await User.find({username : args.username});
-      if(!user && args.password !=="secret"){
+      let user = await User.findOne({username : args.username});
+      if(!user || args.password !=="secret"){
         throw new UserInputError("wrong Credentials");
       }
 
@@ -281,9 +294,9 @@ const server = new ApolloServer({
   resolvers,
   context: async ({ req }) => {
     const auth = req ? req.headers.authorization : null
-    if (auth && auth.toLowerCase().startsWith('bearer')) {
+    if (auth && auth.toLowerCase().startsWith('bearer ')) {
       const decodedToken = jwt.verify(auth.substring(7), jwt_secret)
-      const currentUser = await User.findOne(decodedToken.username)
+      const currentUser = await User.findOne({username : decodedToken.username})
       return { currentUser }
     }
   },
