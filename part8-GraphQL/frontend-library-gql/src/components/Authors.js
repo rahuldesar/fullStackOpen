@@ -11,18 +11,18 @@ const Authors = (props) => {
   const [ updateAuthor ] = useMutation(UPDATE_AUTHOR_BIRTHYEAR,{
     refetchQueries : [ {query: GET_ALL_AUTHORS} ]
   });
-
-  if(allAuthors.loading){
-    return <div> LOADING Authors</div>
-  }
   
   if (!props.show) {
     return null; 
   };
 
+  if(allAuthors.loading){
+    return <div>LOADING AUTHOR</div>
+  }
+
 
   const authors = allAuthors.data.allAuthors;
-
+  console.log(authors);
   const authorUpdateHandler = (event) => {
     event.preventDefault();
     const setBornTo = Number(birthYear);
@@ -31,7 +31,6 @@ const Authors = (props) => {
     setAuthorName('');
     setBirthYear('');
   }
-
   return (
     <div>
       <h2>authors</h2>
@@ -55,7 +54,7 @@ const Authors = (props) => {
       <h2>Set Birthyear</h2>
       <form onSubmit={authorUpdateHandler }>
 
-{/*OPTED to use html datalist instead of select tag, react select, */}
+{/* OPTED to use html datalist instead of select tag, react select, */}
         <div style={{marginBottom:'10px'}}>
           <input type="text" 
             value={ authorName } 
