@@ -1,6 +1,43 @@
 import { gql } from '@apollo/client';
 
 
+// * ===========================================
+// *  FRAGMENTS 
+// * ===========================================
+
+const PERSON_DETAILS = gql`
+  fragment PersonDetails on Person { 
+    id
+    name
+    phone
+    address{
+      street
+      city
+    }
+  }
+`
+
+
+
+// * ===========================================
+// *  SUBSCRIBTION 
+// * ===========================================
+
+export const PERSON_ADDED = gql`
+  subscription {
+    personAdded {
+      ...PersonDetails
+    }
+  }
+  
+${PERSON_DETAILS}
+`
+
+
+// * ===========================================
+// *  QUERY 
+// * ===========================================
+
 export const query = gql`
 query{
   allPersons{
@@ -15,7 +52,32 @@ query{
 }
 `
 
-export const CREATE_PERSON = gql`
+
+export const ALL_PERSONS = gql`
+  query {
+    allPersons { 
+      name
+      phone
+      id
+    }
+  }
+  `
+
+export const FIND_PERSON = gql`
+query FindPerson($nameToSearch : String!) {
+  findPerson(name: $nameToSearch) {
+    ...PersonDetails  
+  }
+}
+${PERSON_DETAILS}
+`
+
+// * ===========================================
+// *  MUTATION 
+// * ===========================================
+
+
+export const CREATE_PERSON = gql` 
   mutation createPerson($name: String!, $street: String!, $city: String!, $phone: String!){
     addPerson(
       name: $name,
@@ -32,29 +94,6 @@ export const CREATE_PERSON = gql`
       }
     }
   }
-`
-
-export const ALL_PERSONS = gql`
-  query {
-    allPersons { 
-      name
-      phone
-      id
-    }
-  }
-`
-
-export const FIND_PERSON = gql`
-query FindPerson($nameToSearch : String!) {
-  findPerson(name: $nameToSearch) {
-    name
-    phone
-    address{
-      city
-      street
-    }    
-  }
-}
 `
 
 export const EDIT_NUMBER = gql`
