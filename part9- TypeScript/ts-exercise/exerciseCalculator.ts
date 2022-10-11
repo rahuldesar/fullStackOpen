@@ -47,4 +47,65 @@ const calculateExercise = (dailyHours: Array<number> , target: number) : exercis
   }
 }
 
+
+interface parsedArguments { 
+  days : Array<number>,
+  target: number
+}
+
+const parseArgumentValues = (args : Array<string>) : parsedArguments => {
+  let target;
+  if(!isNaN(Number(args[2]))) {
+    target = Number(args[2]);
+  } else {
+    throw new Error("First value is not Number");
+  }
+
+  let arr=[];
+  for (let i = 3; i < args.length; i++) {
+    if(!isNaN(Number(args[i]))){
+      arr.push(Number(args[i]));
+    } else {
+      throw new Error('ALL EXERCISE HOURS MUST BE A NUMBER');
+    }
+  }
+  return {
+    days : arr,
+    target
+  }  
+}
+
+
+console.log("==================================================");
+console.log("HARDCODED calculateExercise([3, 0, 2, 4.5, 0, 3, 1], 2) = >");
 console.log(calculateExercise([3, 0, 2, 4.5, 0, 3, 1], 2));
+console.log("==================================================");
+
+
+try { 
+  let {target, days } = parseArgumentValues(process.argv);
+  console.log(calculateExercise(days, target));
+} catch (error : unknown)  {
+  let errorMessage = "Oooops ... There has been an Error :";
+  if(error instanceof Error) 
+    errorMessage += ' ERROR ' + error.message;
+  console.log(errorMessage);
+}
+
+
+
+
+
+
+// try{
+//   let {value1, value2} = parseArgumentValues(process.argv);
+//   calculateYo(value1, value2);
+// } catch (error : unknown ) {
+//   let errorMessage : string = "Ooops.. Some Error Happened";
+//   if(error instanceof Error) 
+//     errorMessage += ' ERROR ' + error.message;
+
+//   console.log(errorMessage);
+
+// }
+
