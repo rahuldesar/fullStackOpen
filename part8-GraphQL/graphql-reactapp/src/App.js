@@ -8,6 +8,25 @@ import { PERSON_ADDED } from './queries';
 
 import { ALL_PERSONS } from './queries';
 
+export const updateCache = (cache, query, addedPerson) => {
+  const uniqByName = (a) => {
+    let seen = new Set();
+    return a.filter((item) => {
+      let k = item.name;
+      return seen.has(k) ? false: seen.add(k);
+    })
+  }
+
+  cache.updateQuery(query, ({ allPersons }) => {
+    return {
+      allPersons: uniqByName(allPersons.concat(addedPerson)),
+    }
+  })
+}
+
+
+
+
 const Notify= ({ errorMessage }) => {
   if(!errorMessage){
     return null;
@@ -28,9 +47,12 @@ const App = ( ) => {
 
   useSubscription( PERSON_ADDED, { 
     onSubscriptionData : ({ subscriptionData }) => {
-      console.log(subscriptionData)
+      const addedPerson = subscriptionData.data.personAdded;
+      notify(`${addedPerson.name} added `);
+      
+      updateCache(client.cache, {query: ALL_PERSONS}, addedPerson);
     }
-  })
+  });
   
   if(result.loading){
     return <div> LOADING RESULTS... </div> 
