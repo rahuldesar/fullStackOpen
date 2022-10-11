@@ -10,3 +10,5 @@ const b : number = Number(process.argv[3]);
 
 
 console.log(multiplicator(a, b, `Multiplied numbers ${a} and ${b}, the result is:`));
+
+
