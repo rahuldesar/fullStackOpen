@@ -12,5 +12,41 @@ const calculateBmi = ( height: number , weight: number) : string => {
   else if (bmi >= 40.0  ) return 'Obese (Class III)';
 }
 
+
+console.log("======================================");
+console.log("HARDCODED calculateBmi(180, 74) => ")
 console.log(calculateBmi(180, 74));
+console.log("=======================================");
+
+interface bmiValues { 
+  height: number,
+  weight: number
+};
+
+const parseBmiValues = (args : Array<string>)  : bmiValues => {
+  if( args.length > 4 ) throw new Error('Too many arguments');
+  if( args.length < 4 ) throw new Error('Need more arguments')
+
+  if(!isNaN(Number(args[2])) && !isNaN(Number(args[3]))){
+    return {
+      height : Number(args[2]),
+      weight : Number(args[3])
+    }
+  } else { 
+    throw new Error('Arguments must be numbers');
+  }
+}
+
+
+
+try {
+  let {height, weight} = parseBmiValues(process.argv);
+  console.log(calculateBmi(height,weight));
+} catch (error : unknown) { 
+  let errorMessage = "Oooops.. Something went wrong :"
+  if(error instanceof Error) {
+    errorMessage += ' ERROR ' + error.message;
+  }
+  console.log(errorMessage);
+}
 
