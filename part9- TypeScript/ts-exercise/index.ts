@@ -1,5 +1,5 @@
 import express from "express";
-import { parseBmiValues, calculateBmi, bmiValuesObj } from "./bmiCalculator";
+import { parseBmiValues, calculateBmi, bmiValuesObj } from "./bmiCalculatorQS";
 
 // import qs from 'qs';
 const app = express();
@@ -21,7 +21,8 @@ app.get('/hello', (_req, res) => {
 
 app.get('/bmi', (req, res) => {
   try{
-    let {height, weight} = parseBmiValues(["0","0",String(req.query.height), String(req.query.weight)]);
+    let {height, weight} = parseBmiValues([String(req.query.height), String(req.query.weight)]);
+    console.log('💀 ~ file: index.ts ~ line 25 ~ app.get ~ {height, weight}', {height, weight})
     const bmi = (calculateBmi(height,weight));
     res.send(getBmi(height,weight,bmi));
   } catch (error: unknown) {
