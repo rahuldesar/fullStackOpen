@@ -3,12 +3,6 @@ interface bmiValues {
   height: number,
 };
 
-export interface bmiValuesObj {
-  weight: number,
-  height: number,
-  bmi: string,
-};
-
 export const calculateBmi = ( height: number , weight: number) : string => {
   const heightInM = height/100;
   const bmi = Number((weight/(heightInM*heightInM)).toFixed(1));
@@ -35,13 +29,5 @@ export const parseBmiValues = (args : Array<string>)  : bmiValues => {
     }
   } else { 
     throw new Error('Invalid Arguments. Please Check Again.');
-  }
-}
-
-export const getBmi= (height: number,weight: number, bmi: string ): bmiValuesObj => {
-  return{
-    height,
-    weight,
-    bmi
   }
 }
