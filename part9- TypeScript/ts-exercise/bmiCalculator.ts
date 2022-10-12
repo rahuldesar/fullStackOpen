@@ -3,15 +3,7 @@ interface bmiValues {
   height: number,
 };
 
-export interface bmiValuesObj {
-  weight: number,
-  height: number,
-  bmi: string,
-};
-
-console.log('yo') ;
-
-export const calculateBmi = ( height: number , weight: number) : string => {
+const calculateBmi = ( height: number , weight: number) : string => {
   const heightInM = height/100;
   const bmi = Number((weight/(heightInM*heightInM)).toFixed(1));
   console.log(`Your BMI is ${bmi}`);
@@ -25,7 +17,6 @@ export const calculateBmi = ( height: number , weight: number) : string => {
   else if (bmi >= 40.0  ) return 'Obese (Class III)';
   else throw new Error('Wrong inputs') ;
 }
-
 
 console.log("======================================");
 console.log("HARDCODED calculateBmi(180, 74) => ")
@@ -46,7 +37,6 @@ export const parseBmiValues = (args : Array<string>)  : bmiValues => {
     throw new Error('Arguments must be numbers');
   }
 }
-
 
 
 try {
