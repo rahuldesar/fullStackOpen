@@ -37,3 +37,11 @@ export const parseBmiValues = (args : Array<string>)  : bmiValues => {
     throw new Error('Invalid Arguments. Please Check Again.');
   }
 }
+
+export const getBmi= (height: number,weight: number, bmi: string ): bmiValuesObj => {
+  return{
+    height,
+    weight,
+    bmi
+  }
+}
