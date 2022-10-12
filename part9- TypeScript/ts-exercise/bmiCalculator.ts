@@ -1,4 +1,17 @@
-const calculateBmi = ( height: number , weight: number) : string => {
+interface bmiValues {
+  weight: number,
+  height: number,
+};
+
+export interface bmiValuesObj {
+  weight: number,
+  height: number,
+  bmi: string,
+};
+
+console.log('yo') ;
+
+export const calculateBmi = ( height: number , weight: number) : string => {
   const heightInM = height/100;
   const bmi = Number((weight/(heightInM*heightInM)).toFixed(1));
   console.log(`Your BMI is ${bmi}`);
@@ -10,6 +23,7 @@ const calculateBmi = ( height: number , weight: number) : string => {
   else if (bmi >= 30.0 && bmi <= 34.9 ) return 'Obese (Class I)';
   else if (bmi >= 35.0 && bmi <= 39.9 ) return 'Obese (Class II)';
   else if (bmi >= 40.0  ) return 'Obese (Class III)';
+  else throw new Error('Wrong inputs') ;
 }
 
 
@@ -18,12 +32,8 @@ console.log("HARDCODED calculateBmi(180, 74) => ")
 console.log(calculateBmi(180, 74));
 console.log("=======================================");
 
-interface bmiValues { 
-  height: number,
-  weight: number
-};
 
-const parseBmiValues = (args : Array<string>)  : bmiValues => {
+export const parseBmiValues = (args : Array<string>)  : bmiValues => {
   if( args.length > 4 ) throw new Error('Too many arguments');
   if( args.length < 4 ) throw new Error('Need more arguments')
 
@@ -49,4 +59,3 @@ try {
   }
   console.log(errorMessage);
 }
-
