@@ -13,7 +13,8 @@ app.get('/hello', (_req, res) => {
 });
 
 
-// * USAGE : 'http://localhost:3004/bmi?weight=180&height=181'
+// * ......GET REQUEST FORMAT.......  
+// GET 'http://localhost:3004/bmi?weight=180&height=181'
 app.get('/bmi', (req, res) => {
   try{
     const {height, weight} = parseBmiValues([String(req.query.height), String(req.query.weight)]);
