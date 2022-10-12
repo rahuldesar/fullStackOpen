@@ -17,17 +17,16 @@ const calculateAverage = (days : Array<number>): number => {
   return (sum/days.length);
 };
 
-// ? RETURNING OBJECT using `any` type. instead of INTERFACE.
-const getRatingDetails = (achieved : number , goal: number) : any => {
+const getRatingDetails = (achieved : number , goal: number) : {rating: number; ratingDescription : string} => {
   if(achieved > goal){
     if(achieved-goal > 1 ) return { rating : 3 , ratingDescription : 'Slow down Tiger'};
     else return { rating : 3 , ratingDescription : 'Keep Going . ;)'};
   } else {
     const difference = goal - achieved; 
     if(difference> 1 ) return { rating : 1 , ratingDescription : 'Are you even Trying? u fatfuk'};
-    else return { rating: 2, ratingDescription: 'I feel like your father, Disappointed.'} 
+    else return { rating: 2, ratingDescription: 'I feel like your father, Disappointed.'};
   }
-}
+};
 
 const calculateExercise = (dailyHours: Array<number> , target: number) : exerciseValues => {
   const periodLength = dailyHours.length;
@@ -44,8 +43,8 @@ const calculateExercise = (dailyHours: Array<number> , target: number) : exercis
     ratingDescription,
     target,
     average
-  }
-}
+  };
+};
 
 
 interface parsedArguments { 
@@ -61,10 +60,10 @@ const parseArgumentValues = (args : Array<string>) : parsedArguments => {
     throw new Error("First value is not Number");
   }
 
-  let arr=[];
+  const arr : Array<number> =[];
   for (let i = 3; i < args.length; i++) {
     if(!isNaN(Number(args[i]))){
-      arr.push(Number(args[i]));
+      arr.concat(Number(args[i]));
     } else {
       throw new Error('ALL EXERCISE HOURS MUST BE A NUMBER');
     }
@@ -72,8 +71,8 @@ const parseArgumentValues = (args : Array<string>) : parsedArguments => {
   return {
     days : arr,
     target
-  }  
-}
+  };
+};
 
 
 console.log("==================================================");
@@ -83,7 +82,7 @@ console.log("==================================================");
 
 
 try { 
-  let {target, days } = parseArgumentValues(process.argv);
+  const {target, days } = parseArgumentValues(process.argv);
   console.log(calculateExercise(days, target));
 } catch (error : unknown)  {
   let errorMessage = "Oooops ... There has been an Error :";
