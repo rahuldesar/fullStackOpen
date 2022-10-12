@@ -1,7 +1,7 @@
 type Operation = 'multiply' | 'add' | 'divide';
 
 
-const calculator = (a: number, b: number, op: Operation) : number => {
+  export const calculator = (a: number, b: number, op: Operation) : number => {
   switch(op){
     case 'add' :
       return a + b;
@@ -13,7 +13,7 @@ const calculator = (a: number, b: number, op: Operation) : number => {
     default:
       throw new Error('Operation is not multiply, add or divide');
     }
-}
+};
 
 try{
   console.log(calculator(1,0,'divide'));
