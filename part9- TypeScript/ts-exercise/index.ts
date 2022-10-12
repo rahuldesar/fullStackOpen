@@ -3,6 +3,8 @@ import { parseBmiValues, calculateBmi } from "./bmiCalculatorQS";
 const app = express();
 const PORT = 3004;
 
+
+// * res.send({some : 'json'}) is same as res.json({some: 'json'})
 app.get('/hello', (_req, res) => {
   res.send('HELLO FULLSTACK');
 });
@@ -12,10 +14,10 @@ app.get('/bmi', (req, res) => {
   try{
     let {height, weight} = parseBmiValues([String(req.query.height), String(req.query.weight)]);
     const bmi = (calculateBmi(height,weight));
-    res.send({height, weight, bmi});
+    res.json({height, weight, bmi});
   } catch (error: unknown) {
     if(error instanceof Error){
-      res.send({error : error.message});
+      res.json({error : error.message});
     }
   }
 });
